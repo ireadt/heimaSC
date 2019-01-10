@@ -1,6 +1,8 @@
 // 搜索栏（头部）
 window.onload=function(){
     search();
+    banner();
+    downTime();
 };
 function search(){
     var searchBox=document.querySelector('.hm_header_box');
@@ -19,8 +21,6 @@ function search(){
         searchBox.style.background="rgba(201,21,35,"+opacity+")";
     }
 };
-
-
 //轮播图
 function banner(){
     var banner=document.querySelector('.hm_banner');
@@ -40,25 +40,25 @@ function banner(){
     };
 
     var setTranslateX=function(translateX){
-        imagesBox.style.webitTransform="translateX("+translateX+"px)";
-        imagesBox.style.transform="translateX("+translateX+"px)";
+        imageBox.style.webkitTransform="translateX("+translateX+"px)";
+        imageBox.style.transform="translateX("+translateX+"px)";
     };
 
     var index=1;
     var timer=setInterval(function(){
-        imdex ++;
+        index ++;
         addTransition();
         setTranslateX(-index*w);
     },4000);
 
     itcast.transitionEnd(imageBox,function(){
-        console.log('tranaitionEnd');
-        if(index>=9){
+        console.log('transitionEnd');
+        if(index>=6){
             index=1;
             removeTransition();
             setTranslateX(-index*w);
         }else if(index<=0){
-            index=8;
+            index=5;
             removeTransition();
             setTranslateX(-index*w);
         }
@@ -119,4 +119,31 @@ function banner(){
             setTranslateX(-index*w);
         },4000);
     });
+};
+// 商品块
+function downTime(){
+    var time=5*60*60;
+    var timer=null;
+    var skTime=document.querySelector('.sk_time');
+    var spans=skTime.querySelectorAll('span');
+    timer=setInterval(function(){
+        if(time<=0){
+            clearInterval(timer);
+            return false;
+        }
+        time --;
+
+        var h=Math.floor(time/3600);
+        var m=Math.floor(time%3600/60);
+        var s=time%60;
+        console.log(h);
+        console.log(m);
+        console.log(s);
+        spans[0].innerHTML=Math.floor(h/10);
+        spans[1].innerHTML=h%10;
+        spans[3].innerHTML=Math.floor(m/10);
+        spans[4].innerHTML=m%10;
+        spans[6].innerHTML=Math.floor(s/10);
+        spans[7].innerHTML=s%10;
+    },1000);
 }
